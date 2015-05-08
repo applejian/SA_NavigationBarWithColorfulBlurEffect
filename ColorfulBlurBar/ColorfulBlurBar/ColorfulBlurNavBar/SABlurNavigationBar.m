@@ -8,6 +8,11 @@
 
 #import "SABlurNavigationBar.h"
 
+@interface SABlurNavigationBar ()
+@property (strong, nonatomic) CALayer *backgroundColorLayer;
+@end
+
+
 @implementation SABlurNavigationBar
 
 - (void)awakeFromNib
@@ -29,7 +34,37 @@
 
 - (void)setup
 {
+    if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_7_0
+        || NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
+        return;
+    }
     
+    self.backgroundColorLayer = [CALayer layer];
+    self.backgroundColorLayer.opacity = 0.8f;
+}
+
+- (void)setBarTintColor:(UIColor *)barTintColor
+{
+    [super setBarTintColor:barTintColor];
+    
+    if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_7_0
+        || NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
+        return;
+    }
+    
+    self.backgroundColorLayer.backgroundColor = barTintColor.CGColor;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    if (self.backgroundColorLayer) {
+        [self.backgroundColorLayer removeFromSuperlayer];
+        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        self.backgroundColorLayer.frame = CGRectMake(0, -statusBarHeight, CGRectGetWidth(self.frame), statusBarHeight+CGRectGetHeight(self.frame));
+        [self.layer insertSublayer:self.backgroundColorLayer atIndex:1];
+    }
 }
 
 - (void)blurWithColor:(UIColor *)color
