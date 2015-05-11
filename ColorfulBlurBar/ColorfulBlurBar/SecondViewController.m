@@ -36,8 +36,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGColorRef beginColor = CGColorCreate(colorSpaceRef, (CGFloat[]){0.9f, 0.1f, 0.01f, 1.0f});
-    CGColorRef endColor = CGColorCreate(colorSpaceRef, (CGFloat[]){0.01f, 0.88f, 0.11f, 1.0f});
+    CGColorRef beginColor = CGColorCreate(colorSpaceRef, (CGFloat[]){0.9f, 0.1f, 0.01f, .7f});
+    CGColorRef endColor = CGColorCreate(colorSpaceRef, (CGFloat[]){0.01f, 0.88f, 0.11f, .7f});
     CFArrayRef colorArray = CFArrayCreate(kCFAllocatorDefault, (const void*[]){beginColor, endColor}, 2, nil);
     CGGradientRef gradientRef = CGGradientCreateWithColors(colorSpaceRef, colorArray, (CGFloat[]){
         0.0f,

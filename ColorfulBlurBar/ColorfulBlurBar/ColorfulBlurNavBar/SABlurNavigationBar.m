@@ -18,7 +18,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
+
     [self setup];
 }
 
@@ -39,8 +39,9 @@
         return;
     }
     
+    self.barStyle = UIBarStyleBlack;
     self.backgroundColorLayer = [CALayer layer];
-    self.backgroundColorLayer.opacity = 0.8f;
+    self.backgroundColorLayer.opacity = 0.85f;
 }
 
 - (void)setBarTintColor:(UIColor *)barTintColor
@@ -50,6 +51,10 @@
     if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_7_0
         || NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
         return;
+    }
+    
+    if (self.backgroundColorLayer && !self.backgroundColorLayer.superlayer) {
+        [self.layer addSublayer:self.backgroundColorLayer];
     }
     
     self.backgroundColorLayer.backgroundColor = barTintColor.CGColor;
